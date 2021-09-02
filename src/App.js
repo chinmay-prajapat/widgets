@@ -1,23 +1,23 @@
 import React from "react";
 import Accordion from "./components/Accordion";
-const items = [
-  {
-    title: "what is React?",
-    content: "React is a Front end js FrameWork",
-  },
-  {
-    title: "How Long Does It Take To Learn",
-    content: "React is a Front end js FrameWork",
-  },
-  {
-    title: "This is last Question?",
-    content: "React is a Front end js FrameWork",
-  },
-];
 export default () => {
+  const items = [
+    {
+      title: "what is React?",
+      content: "React is a front end framework",
+    },
+    {
+      title: "what does React do?",
+      content: "React is a front end framework",
+    },
+    {
+      title: "How does React react?",
+      content: "React is a front end framework",
+    },
+  ];
   return (
     <div>
-      <Accordion items={items} />
+      <Accordion item={items} />
     </div>
   );
 };
