@@ -6,7 +6,6 @@ const Accordion = ({ item }) => {
     setActiveIndex(index);
     setStates(e);
   };
-
   const renderedItems = item.map((item, i) => {
     const active =
       i === activeIndex && !activeState.target.classList.contains("active")
