@@ -1,8 +1,17 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 const Temp = () => {
-  const [term, setTerm] = useState("");
+  const [term, setTerm] = useState("dog");
+  const [debouncedTerm, setDebouncedTerm] = useState(term);
   const [results, setResults] = useState([]);
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDebouncedTerm(term);
+    }, 1000);
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [term]);
   useEffect(() => {
     const search = async () => {
       const { data } = await axios.get("https://en.wikipedia.org/w/api.php", {
@@ -11,24 +20,16 @@ const Temp = () => {
           list: "search",
           origin: "*",
           format: "json",
-          srsearch: term,
+          srsearch: debouncedTerm,
         },
       });
       setResults(data.query.search);
     };
-    if (term && !results.length) {
+    if (debouncedTerm) {
       search();
-    } else {
-      const timeId = setTimeout(() => {
-        if (term) {
-          search();
-        }
-      }, 500);
-      return () => {
-        clearTimeout(timeId);
-      };
     }
-  }, [results.length, term]);
+  }, [debouncedTerm]);
+
   const renderedList = results.map((item) => {
     return (
       <div key={item.title} className="ui segment">
