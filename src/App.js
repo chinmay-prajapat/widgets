@@ -1,24 +1,34 @@
-import React from "react";
-import Accordion from "./components/Accordion";
+import React, { useState } from "react";
+// import Accordion from "./components/Accordion";
 import Search from "./components/search";
+import Temp from "./components/Temp";
+import Dropdown from "./components/Dropdown";
+const options = [
+  {
+    label: "The Color Red",
+    value: "red",
+  },
+  {
+    label: "The Color Green",
+    value: "green",
+  },
+  {
+    label: "A Shade of Blue",
+    value: "blue",
+  },
+];
 export default () => {
-  const items = [
-    {
-      title: "what is React?",
-      content: "React is a front end framework",
-    },
-    {
-      title: "what does React do?",
-      content: "React is a front end framework",
-    },
-    {
-      title: "How does React react?",
-      content: "React is a front end framework",
-    },
-  ];
+  const [selected, setSelected] = useState(options[0]);
+
   return (
     <div>
-      <Accordion item={items} />
+      {/* <Dropdown
+        selected={selected}
+        onSelectedChange={setSelected}
+        options={options}
+      /> */}
+      {/* <Temp /> */}
+      <Search />
     </div>
   );
 };
