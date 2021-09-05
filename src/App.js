@@ -27,8 +27,9 @@ export default () => {
         onSelectedChange={setSelected}
         options={options}
       /> */}
-      {/* <Temp /> */}
-      <Search />
+      {/* <Temp options={options} selected={selected} onSelect={setSelected} /> */}
+      <Temp options={options} setOption={setSelected} selected={selected} />
+      {/* <Search /> */}
     </div>
   );
 };

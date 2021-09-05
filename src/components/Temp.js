@@ -1,63 +1,43 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
-const Temp = () => {
-  const [term, setTerm] = useState("dog");
-  const [debouncedTerm, setDebouncedTerm] = useState(term);
-  const [results, setResults] = useState([]);
+import React, { useState, useRef, useEffect } from "react";
+const Temp = ({ options, setOption, selected }) => {
+  const [open, setOpen] = useState(false);
+  const ref = useRef();
   useEffect(() => {
-    const timerId = setTimeout(() => {
-      setDebouncedTerm(term);
-    }, 1000);
-    return () => {
-      clearTimeout(timerId);
-    };
-  }, [term]);
-  useEffect(() => {
-    const search = async () => {
-      const { data } = await axios.get("https://en.wikipedia.org/w/api.php", {
-        params: {
-          action: "query",
-          list: "search",
-          origin: "*",
-          format: "json",
-          srsearch: debouncedTerm,
-        },
-      });
-      setResults(data.query.search);
-    };
-    if (debouncedTerm) {
-      search();
-    }
-  }, [debouncedTerm]);
+    document.body.addEventListener(
+      "click",
+      (e) => {
+        if (ref.current.contains(e.target)) {
+          return;
+        }
+        setOpen(false);
+      },
+      { capture: true }
+    );
+  }, []);
 
-  const renderedList = results.map((item) => {
+  const renderedList = options.map((item) => {
+    if (item.value === selected.value) return null;
     return (
-      <div key={item.title} className="ui segment">
-        <div className="ui form">
-          <label>{item.title}</label>
-        </div>
-        <div className="ui content">{item.snippet}</div>
-        <div className="right float content">
-          <a
-            className="ui button"
-            href={`https://en.wikipedia.org?curid=${item.pageid}`}
-          >
-            Go
-          </a>
-        </div>
+      <div className="item" key={item.label} onClick={() => setOption(item)}>
+        {item.label}
       </div>
     );
   });
   return (
-    <div className="ui segment">
-      <div className="ui form">
-        <input
-          type="text"
-          value={term}
-          onChange={(e) => setTerm(e.target.value)}
-        />
+    <div ref={ref} className="ui form">
+      <div className="field">
+        <label className="label">Select a Color</label>
+        <div
+          onClick={() => setOpen(!open)}
+          className={`ui selection dropdown ${open ? "visible active" : ""}`}
+        >
+          <i className="dropdown icon"></i>
+          <div className="text">{selected.label}</div>
+          <div className={`menu ${open ? "visible transition" : ""} `}>
+            {renderedList}
+          </div>
+        </div>
       </div>
-      <div>{renderedList}</div>
     </div>
   );
 };
