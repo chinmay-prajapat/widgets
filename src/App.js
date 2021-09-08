@@ -1,8 +1,24 @@
 import React, { useState } from "react";
-// import Accordion from "./components/Accordion";
+import Accordion from "./components/Accordion";
 import Search from "./components/search";
-import Temp from "./components/Temp";
+import Route from "./components/Route";
 import Dropdown from "./components/Dropdown";
+import Translate from "./components/Translate";
+import Header from "./components/Header";
+const items = [
+  {
+    title: "What is React?",
+    content: "React is a front end javascript framework",
+  },
+  {
+    title: "Why use React",
+    content: "React is a favorite js library",
+  },
+  {
+    title: "Who is the owns React",
+    content: "The framework has been built by facebook",
+  },
+];
 const options = [
   {
     label: "The Color Red",
@@ -17,19 +33,30 @@ const options = [
     value: "blue",
   },
 ];
+
+// eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
   const [selected, setSelected] = useState(options[0]);
-
   return (
     <div>
-      {/* <Dropdown
-        selected={selected}
-        onSelectedChange={setSelected}
-        options={options}
-      /> */}
-      {/* <Temp options={options} selected={selected} onSelect={setSelected} /> */}
-      <Temp options={options} setOption={setSelected} selected={selected} />
-      {/* <Search /> */}
+      <Header />
+      <Route path="/">
+        <Accordion item={items} />
+      </Route>
+      <Route path="/list">
+        <Search />
+      </Route>
+      <Route path="/dropdown">
+        <Dropdown
+          label="Select a color"
+          options={options}
+          selected={selected}
+          onSelectedChange={setSelected}
+        />
+      </Route>
+      <Route path="/translate">
+        <Translate />
+      </Route>
     </div>
   );
 };
