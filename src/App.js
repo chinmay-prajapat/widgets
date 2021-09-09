@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Accordion from "./components/Accordion";
-import Search from "./components/search";
+import Search from "./components/Search";
 import Route from "./components/Route";
 import Dropdown from "./components/Dropdown";
 import Translate from "./components/Translate";
